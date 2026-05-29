@@ -1,216 +1,80 @@
-#  Plant Disease Classification Model
+# Plant Disease Classification
 
-A deep learning-based plant disease classification system developed using TensorFlow/Keras and the PlantVillage dataset. The project identifies plant diseases from leaf images and provides predictions on unseen samples using trained classification models.
+This project trains and runs inference for a plant disease classification model using TensorFlow and a custom dataset layout.
 
----
+## Requirements
+- Python 3.13
+- `tensorflow-cpu==2.21.0`
+- Other dependencies listed in `requirements.txt`
 
-##  Project Overview
+## Getting Started
 
-Plant diseases can significantly impact agricultural productivity. This project leverages computer vision and deep learning techniques to automatically classify plant diseases from leaf images.
+1. Install Python 3.13
+   ```powershell
+   py -3.13 --version
+   ```
 
-The pipeline includes:
+2. Copy the full project folder to the new device:
+   - `config.yaml`
+   - `requirements.txt`
+   - `src\`
+   - `models\` (if you want to skip training)
+   - `Dataset\` (if you want to train from scratch)
 
-* Image preprocessing and normalization
-* Convolutional Neural Network (CNN) training
-* PCA-based dimensionality reduction
-* StandardScaler normalization
-* Model evaluation using confusion matrices and classification reports
-* Visualization of training performance
-* Prediction on custom leaf images
+3. Create and activate a virtual environment
+   ```powershell
+   cd "C:\path\to\project_plant dc"
+   py -3.13 -m venv .venv
+   .venv\Scripts\Activate.ps1
+   ```
 
----
+4. Install dependencies
+   ```powershell
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
 
-## Tech Stack
+## Training the Model
 
-* Python
-* TensorFlow / Keras
-* Scikit-learn
-* OpenCV
-* NumPy
-* Pandas
-* Matplotlib
-* Seaborn
-
----
-
-##  Dataset
-
-This project uses the **PlantVillage Dataset** for plant disease classification.
-
-Due to GitHub storage limitations, the dataset is **not included** in this repository.
-
-Download the dataset from Kaggle and place it inside the project directory:
-
-```text
-Dataset/
-└── PlantVillage/
-    ├── train/
-    │   ├── class_1/
-    │   ├── class_2/
-    │   └── ...
-    └── val/
-        ├── class_1/
-        ├── class_2/
-        └── ...
-```
-
-The training pipeline expects the dataset to be available in the above structure.
-
----
-
-## ⚙️ Machine Learning Pipeline
-
-1. Load and preprocess leaf images
-2. Resize and normalize image data
-3. Apply StandardScaler
-4. Perform PCA-based dimensionality reduction
-5. Train CNN and PCA-based models
-6. Evaluate performance using classification metrics
-7. Generate predictions on unseen images
-
----
-
-##  Project Structure
-
-```text
-classifier/
-│
-├── src/
-│   ├── __init__.py
-│   ├── data.py
-│   ├── download_dataset.py
-│   ├── model.py
-│   ├── predict.py
-│   ├── train.py
-│   └── utils.py
-│
-├── reports/
-│   ├── accuracy_loss_comparison.png
-│   ├── confusion_matrix_cnn.png
-│   ├── confusion_matrix_pca_dense.png
-│   └── classification_report.txt
-│
-├── config.yaml
-├── requirements.txt
-├── .gitignore
-└── README.md
-```
-
----
-
-##  Installation
-
-### 1. Clone the Repository
-
-```bash
-git clone <repository-url>
-cd classifier
-```
-
-### 2. Create a Virtual Environment
-
-```powershell
-py -3.13 -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-### 3. Install Dependencies
-
-```powershell
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
----
-
-##  Training the Model
-
-Before training, ensure the PlantVillage dataset is placed inside the `Dataset/` directory.
-
-Run:
-
+To train the models from scratch, run:
 ```powershell
 py -3.13 -m src.train
 ```
 
-### Generated Outputs
+> Important: use module execution (`-m src.train`). Running `py -3.13 src\train.py` from the project root may fail because imports depend on the `src` package path.
 
-Training generates:
+### Expected output files after training
+- `models\best_plant_disease_model_cnn.keras`
+- `models\best_plant_disease_model_pca_dense.keras`
+- `models\scaler.pkl`
+- `models\pca.pkl`
+- `models\class_names.pkl`
+- `reports\accuracy_loss_comparison.png`
+- `reports\confusion_matrix_cnn.png`
+- `reports\confusion_matrix_pca_dense.png`
+- `reports\classification_report.txt`
 
-```text
-models/
-├── best_plant_disease_model_cnn.keras
-├── best_plant_disease_model_pca_dense.keras
-├── scaler.pkl
-├── pca.pkl
-└── class_names.pkl
-```
+## Running Inference
 
-and
-
-```text
-reports/
-├── accuracy_loss_comparison.png
-├── confusion_matrix_cnn.png
-├── confusion_matrix_pca_dense.png
-└── classification_report.txt
-```
-
----
-
-##  Running Inference
-
-Predict disease from a leaf image:
-
+To run prediction on an input leaf image:
 ```powershell
-py -3.13 -m src.predict --image "path_to_leaf_image.jpg"
+py -3.13 -m src.predict --image "C:\path\to\leaf.jpg"
 ```
 
-Prediction outputs are saved inside:
+The script will load the trained models from `models\` and save a visualization overlay to:
+- `predictions\prediction_output_<filename>.JPG`
 
-```text
-predictions/
-```
+## Inference-only setup
 
----
+If you only need to run predictions, copy:
+- `config.yaml`
+- `requirements.txt`
+- `src\`
+- `models\`
 
-##  Evaluation Metrics
+Then install dependencies and run the prediction command above.
 
-The models are evaluated using:
-
-* Accuracy Score
-* Confusion Matrix
-* Classification Report
-* Training Loss Curves
-* Validation Loss Curves
-* Training Accuracy Curves
-* Validation Accuracy Curves
-
----
-
-##  Results
-
-The project successfully classifies plant diseases using deep learning and feature-engineering approaches.
-
-Generated reports include:
-
-* CNN Confusion Matrix
-* PCA Dense Model Confusion Matrix
-* Accuracy/Loss Comparison Graphs
-* Detailed Classification Report
-
----
-
-##  Future Improvements
-
-* Web-based deployment
-* Mobile application integration
-* Real-time camera inference
-* Transfer learning with advanced architectures
-* Support for additional crop species
-
-**Abhiramjee Pittu**
-
-B.Tech – Artificial Intelligence & Data Science
-
-Indian Institute of Information Technology, Sri City
+## Notes
+- This project is tested with Python 3.13 and `tensorflow-cpu==2.21.0`.
+- The dataset lives in `Dataset\PlantVillage\train` and `Dataset\PlantVillage\val`.
+- For inference, any valid image path can be used.

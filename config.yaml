@@ -1,0 +1,21 @@
+dataset:
+  path: "Dataset"
+  image_size: 64        # Target resolution for image resizing (64x64)
+  batch_size: 32         # Size of training batches
+  train_split: 0.8       # Fraction of data for training
+  val_split: 0.1         # Fraction of data for validation
+  test_split: 0.1        # Fraction of data for final testing
+  random_seed: 42        # Reproducibility seed
+
+pca:
+  n_components: 128      # Number of principal components for dimensionality reduction
+
+model:
+  cnn_name: "plant_disease_cnn"
+  pca_dense_name: "plant_disease_pca_dense"
+
+training:
+  epochs: 8             # Number of training epochs
+  learning_rate: 0.001   # Learning rate for Adam optimizer
+  save_dir: "models"     # Directory to store trained models
+  reports_dir: "reports" # Directory to save training graphs and evaluations
