@@ -1,20 +1,24 @@
-# Plant Disease Classification Model
+#  Plant Disease Classification Model
 
-A deep learning-based plant disease classification system built using TensorFlow/Keras and the PlantVillage dataset. The project classifies plant diseases from leaf images and provides predictions for unseen samples through a simple inference pipeline.
+A deep learning-based plant disease classification system developed using TensorFlow/Keras and the PlantVillage dataset. The project identifies plant diseases from leaf images and provides predictions on unseen samples using trained classification models.
 
-## Project Overview
+---
 
-This project implements an end-to-end machine learning workflow for plant disease detection using image classification techniques.
+##  Project Overview
 
-Key features include:
+Plant diseases can significantly impact agricultural productivity. This project leverages computer vision and deep learning techniques to automatically classify plant diseases from leaf images.
+
+The pipeline includes:
 
 * Image preprocessing and normalization
-* CNN-based disease classification
-* PCA-based feature reduction pipeline
+* Convolutional Neural Network (CNN) training
+* PCA-based dimensionality reduction
 * StandardScaler normalization
-* Model evaluation using confusion matrix and classification reports
-* Training history visualization
-* Inference on custom leaf images
+* Model evaluation using confusion matrices and classification reports
+* Visualization of training performance
+* Prediction on custom leaf images
+
+---
 
 ## Tech Stack
 
@@ -27,122 +31,186 @@ Key features include:
 * Matplotlib
 * Seaborn
 
-## Dataset
+---
 
-The project uses the PlantVillage dataset containing healthy and diseased leaf images across multiple plant species.
+##  Dataset
 
-Expected dataset structure:
+This project uses the **PlantVillage Dataset** for plant disease classification.
 
+Due to GitHub storage limitations, the dataset is **not included** in this repository.
+
+Download the dataset from Kaggle and place it inside the project directory:
+
+```text
 Dataset/
 └── PlantVillage/
-├── train/
-│   ├── class_1/
-│   ├── class_2/
-│   └── ...
-└── val/
-├── class_1/
-├── class_2/
-└── ...
+    ├── train/
+    │   ├── class_1/
+    │   ├── class_2/
+    │   └── ...
+    └── val/
+        ├── class_1/
+        ├── class_2/
+        └── ...
+```
 
-## Machine Learning Pipeline
+The training pipeline expects the dataset to be available in the above structure.
+
+---
+
+## ⚙️ Machine Learning Pipeline
 
 1. Load and preprocess leaf images
-2. Resize images to model input dimensions
-3. Normalize image data
-4. Apply StandardScaler
-5. Apply PCA for dimensionality reduction
-6. Train CNN-based classifier
-7. Evaluate model performance
-8. Generate predictions for new images
+2. Resize and normalize image data
+3. Apply StandardScaler
+4. Perform PCA-based dimensionality reduction
+5. Train CNN and PCA-based models
+6. Evaluate performance using classification metrics
+7. Generate predictions on unseen images
 
-## Project Structure
+---
 
-project_plant_dc/
+##  Project Structure
 
+```text
+classifier/
+│
+├── src/
+│   ├── __init__.py
+│   ├── data.py
+│   ├── download_dataset.py
+│   ├── model.py
+│   ├── predict.py
+│   ├── train.py
+│   └── utils.py
+│
+├── reports/
+│   ├── accuracy_loss_comparison.png
+│   ├── confusion_matrix_cnn.png
+│   ├── confusion_matrix_pca_dense.png
+│   └── classification_report.txt
+│
 ├── config.yaml
 ├── requirements.txt
-├── src/
-│   ├── train.py
-│   ├── predict.py
-│   ├── data.py
-│   ├── model.py
-│   └── utils.py
-├── Dataset/
-├── models/
-├── reports/
-└── predictions/
+├── .gitignore
+└── README.md
+```
 
-## Requirements
+---
 
-* Python 3.13
-* tensorflow-cpu==2.21.0
-* Dependencies listed in requirements.txt
+##  Installation
 
-## Installation
+### 1. Clone the Repository
 
-Create a virtual environment:
+```bash
+git clone <repository-url>
+cd classifier
+```
+
+### 2. Create a Virtual Environment
 
 ```powershell
 py -3.13 -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
+### 3. Install Dependencies
 
 ```powershell
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Training
+---
 
-Train the models from scratch:
+##  Training the Model
+
+Before training, ensure the PlantVillage dataset is placed inside the `Dataset/` directory.
+
+Run:
 
 ```powershell
 py -3.13 -m src.train
 ```
 
-Expected outputs:
+### Generated Outputs
 
-* best_plant_disease_model_cnn.keras
-* best_plant_disease_model_pca_dense.keras
-* scaler.pkl
-* pca.pkl
-* class_names.pkl
-* confusion matrices
-* classification report
-* training history plots
+Training generates:
 
-## Running Inference
+```text
+models/
+├── best_plant_disease_model_cnn.keras
+├── best_plant_disease_model_pca_dense.keras
+├── scaler.pkl
+├── pca.pkl
+└── class_names.pkl
+```
+
+and
+
+```text
+reports/
+├── accuracy_loss_comparison.png
+├── confusion_matrix_cnn.png
+├── confusion_matrix_pca_dense.png
+└── classification_report.txt
+```
+
+---
+
+##  Running Inference
 
 Predict disease from a leaf image:
 
 ```powershell
-py -3.13 -m src.predict --image "C:\path\to\leaf.jpg"
+py -3.13 -m src.predict --image "path_to_leaf_image.jpg"
 ```
 
-Prediction visualizations are saved in:
+Prediction outputs are saved inside:
 
+```text
 predictions/
+```
 
-## Evaluation Metrics
+---
 
-The model is evaluated using:
+##  Evaluation Metrics
 
-* Accuracy
+The models are evaluated using:
+
+* Accuracy Score
 * Confusion Matrix
 * Classification Report
-* Training/Validation Loss Curves
-* Training/Validation Accuracy Curves
+* Training Loss Curves
+* Validation Loss Curves
+* Training Accuracy Curves
+* Validation Accuracy Curves
 
-## Results
+---
 
-* Achieved approximately 89% classification accuracy on the validation dataset.
-* Successfully distinguishes multiple plant disease categories from leaf images.
+##  Results
 
-## Future Improvements
+The project successfully classifies plant diseases using deep learning and feature-engineering approaches.
 
-* Deploy as a web application
-* Add real-time camera inference
-* Expand support for additional crop species
-* Improve performance using transfer learning
+Generated reports include:
+
+* CNN Confusion Matrix
+* PCA Dense Model Confusion Matrix
+* Accuracy/Loss Comparison Graphs
+* Detailed Classification Report
+
+---
+
+##  Future Improvements
+
+* Web-based deployment
+* Mobile application integration
+* Real-time camera inference
+* Transfer learning with advanced architectures
+* Support for additional crop species
+
+**Abhiramjee Pittu**
+
+B.Tech – Artificial Intelligence & Data Science
+
+Indian Institute of Information Technology, Sri City
